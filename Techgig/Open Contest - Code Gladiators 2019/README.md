@@ -24,15 +24,17 @@ For each test case, Print WIN if all villains can be killed else print LOSE in s
 
 ## Sample TestCase 1
 Input
-
+```
 1
 6
 112 243 512 343 90 478 
 500 789 234 400 452 150
+```
 
 Output
-
+```
 WIN
+```
 
 ## Explanation
 
@@ -69,6 +71,7 @@ For each test case, print the ticket numbers in a single line forming the maximu
 
 ### Sample TestCase 1
 Input
+```
 5
 5
 -1 7 8 -5 4 
@@ -80,15 +83,15 @@ Input
 4 5 4 3 
 4
 5 10 4 -1
-
+```
 Output
-
+```
 48
 13
 12
 44
 10
-
+```
 ## Explanation
 Test Case 1: Maximum sum which can be formed is 12. Element considered 8, 4. Note that Output is printed from the reverse side of the array which is TRUE for all the test cases without the space. So, the output is 48.
 
