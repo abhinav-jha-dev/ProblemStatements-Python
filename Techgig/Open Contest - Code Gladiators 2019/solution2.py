@@ -1,53 +1,26 @@
 ''' Read input from STDIN. Print your output to STDOUT '''
 # Use input() to read input from STDIN and use print to write your output to STDOUT
 
+elements = []
+def maxSum(arr, N, k):
 
-def maxSubArraySum(a, size):
-    elementsSoFar = []
-    even_elementsSoFar = []
-    odd_elementsSoFar = []
-    max_so_far = 0
-    even_max_so_far = 0
-    odd_max_so_far = 0
-    max_ending_here = 0
-    for i in range(0, size):
-        if i % 2 == 0:
-            max_ending_here = max_ending_here + a[i]
-            if max_ending_here < 0:
-                max_ending_here = 0
+    # MS[i] is going to store maximum sum
+    # subsequence in subarray from arr[i]
+    # to arr[n-1]
+    MS = [0 for i in range(N)]
 
-            # Do not compare for all elements. Compare only
-            # when  max_ending_here > 0
-            elif (even_max_so_far < max_ending_here):
-                even_elementsSoFar.append(a[i])
-                even_max_so_far = max_ending_here
-
-    max_ending_here = 0
-
-    for i in range(0, size):
-        if i % 2 != 0:
-            max_ending_here = max_ending_here + a[i]
-            if max_ending_here < 0:
-                max_ending_here = 0
-
-            # Do not compare for all elements. Compare only
-            # when  max_ending_here > 0
-            elif (odd_max_so_far < max_ending_here):
-                odd_elementsSoFar.append(a[i])
-                odd_max_so_far = max_ending_here
-
-    if odd_max_so_far < even_max_so_far:
-        elementsSoFar.append(even_elementsSoFar)
-        max_so_far = even_max_so_far
-    elif odd_max_so_far == even_max_so_far:
-        if odd_elementsSoFar[(len(odd_elementsSoFar)-1)] < even_elementsSoFar[(len(even_elementsSoFar)-1)]:
-            elementsSoFar.append(even_elementsSoFar)
+    # We fill MS from right to left.
+    MS[N - 1] = arr[N - 1]
+    for i in range(N - 2, -1, -1):
+        if (i + k + 1 >= N):
+            MS[i] = max(arr[i], MS[i + 1])
+            elements.append(arr[i])
         else:
-            elementsSoFar.append(odd_elementsSoFar)
-    else:
-        elementsSoFar.append(odd_elementsSoFar)
-        max_so_far = odd_max_so_far
-    return elementsSoFar[0]
+            MS[i] = max(arr[i] + MS[i + k + 1],
+                        MS[i + 1])
+            elements.append(arr[i])
+
+    return MS
 
 
 def main():
@@ -55,22 +28,17 @@ def main():
     while numberOfTests > 0:
         numberOfHouses = int(input())
         ticketValues = input()
-        originalTicketValues = []
-        index = 1
+        originalValues = []
 
         for ticket in ticketValues.split(" "):
-            if ticket != "" and index <= numberOfHouses:
-                originalTicketValues.append(int(ticket))
+            if ticket != "" and numberOfHouses > 0:
+                originalValues.append(int(ticket))
+                numberOfHouses -= 1
 
-        maxvalue = maxSubArraySum(
-            originalTicketValues, len(originalTicketValues))
-        
-        for i in reversed(maxvalue):
-            print(i, end='')
-        
-        print()
+        print(maxSum(originalValues, len(originalValues), 1))
+        print(elements)
+
         numberOfTests -= 1
-
 
  # Write code here
 main()
